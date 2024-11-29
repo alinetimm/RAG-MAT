@@ -1,0 +1,75 @@
+from langchain_community.llms import Ollama
+from langchain.prompts import PromptTemplate
+import pickle
+import torch
+from sentence_transformers import SentenceTransformer
+
+def generate_response(query):
+    # Carrega os embeddings salvos
+    with open("embeddings_data.pkl", "rb") as f:
+        data = pickle.load(f)
+        documents = data['documents']
+        embeddings = data['embeddings']
+        metadata = data['metadata']
+    
+    # Recupera contexto relevante
+    model = SentenceTransformer('all-MiniLM-L6-v2')
+    query_embedding = model.encode(query)
+    
+    # Calcula similaridades e pega os top-k mais relevantes
+    similarities = torch.nn.functional.cosine_similarity(
+        torch.tensor(query_embedding).unsqueeze(0),
+        torch.tensor(embeddings),
+        dim=1
+    )
+    top_k = 3
+    top_results = torch.topk(similarities, k=top_k)
+    
+    # Prepara o contexto
+    context = []
+    for _, idx in zip(top_results.values, top_results.indices):
+        context.append(documents[idx])
+    context = "\n".join(context)
+    
+    # Template do prompt
+    template = """
+    Use o contexto abaixo para responder à pergunta. Se a resposta não estiver no contexto, diga que não tem informação suficiente.
+    
+    Contexto:
+    {context}
+    
+    Pergunta: {query}
+    
+    Resposta:
+    """
+    
+    prompt = PromptTemplate(
+        template=template,
+        input_variables=["context", "query"]
+    )
+    
+    # Gera resposta
+    llm = Ollama(model="mistral")
+    response = llm(prompt.format(context=context, query=query))
+    
+    return response
+
+# Interface de chat
+def chat_interface():
+    print("Assistente de Matemática (digite 'sair' para encerrar)")
+    print("-" * 50)
+    
+    while True:
+        query = input("\nSua pergunta: ")
+        if query.lower() == 'sair':
+            break
+            
+        try:
+            response = generate_response(query)
+            print("\nResposta:", response)
+            print("-" * 50)
+        except Exception as e:
+            print(f"Erro ao gerar resposta: {e}")
+
+if __name__ == "__main__":
+    chat_interface()
