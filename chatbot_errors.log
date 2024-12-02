@@ -1,0 +1,90 @@
+ERROR:root:Erro ao gerar resposta: index out of range in self
+ERROR:root:Erro ao gerar resposta: index out of range in self
+ERROR:root:Erro ao gerar resposta: 'BloomConfig' object has no attribute 'n_positions'
+ERROR:root:Erro ao recuperar documentos: mat1 and mat2 shapes cannot be multiplied (1x384 and 768x3)
+ERROR:root:Erro ao recuperar documentos: mat1 and mat2 shapes cannot be multiplied (1x384 and 768x3)
+ERROR:root:Erro ao recuperar documentos: mat1 and mat2 shapes cannot be multiplied (1x384 and 768x3)
+ERROR:root:Erro ao recuperar documentos: mat1 and mat2 shapes cannot be multiplied (1x384 and 768x3)
+ERROR:root:Erro ao gerar resposta: 'GPTNeoConfig' object has no attribute 'n_positions'
+ERROR:root:Erro ao gerar resposta: 'GPTNeoConfig' object has no attribute 'n_positions'
+ERROR:root:Erro ao gerar resposta: The following `model_kwargs` are not used by the model: ['messages'] (note: typos in the generate arguments will also show up in this list)
+ERROR:root:Erro ao gerar resposta: Input length of input_ids is 824, but `max_length` is set to 200. This can lead to unexpected behavior. You should consider increasing `max_length` or, better yet, setting `max_new_tokens`.
+ERROR:root:Erro ao gerar resposta: Input length of input_ids is 824, but `max_length` is set to 200. This can lead to unexpected behavior. You should consider increasing `max_length` or, better yet, setting `max_new_tokens`.
+ERROR:root:Erro ao gerar resposta: Input length of input_ids is 824, but `max_length` is set to 200. This can lead to unexpected behavior. You should consider increasing `max_length` or, better yet, setting `max_new_tokens`.
+INFO:sentence_transformers.SentenceTransformer:Load pretrained SentenceTransformer: bert-base-uncased
+WARNING:sentence_transformers.SentenceTransformer:No sentence-transformers model found with name bert-base-uncased. Creating a new one with mean pooling.
+INFO:root:[[39.625256 44.269764 45.63344  45.633755 45.90648  45.90648  48.91063
+  49.174232 49.174232 49.174232 49.42895  50.95643  51.289658 51.54348
+  51.748055 51.749607 51.95279  52.569916 52.769657 52.779327 53.049282
+  53.388725 53.94837  54.862465 54.976665 55.440063 55.63256  56.243965
+  56.329628 56.459312 56.500576 57.184235 57.189003 57.435295 57.45909
+  57.859978 58.02877  58.054394 58.054394 58.105    58.163235 58.359383
+  58.812584 58.91958  59.214775 59.249943 59.327744 59.826813 60.094162
+  60.21959 ]]
+INFO:sentence_transformers.SentenceTransformer:Load pretrained SentenceTransformer: bert-base-uncased
+WARNING:sentence_transformers.SentenceTransformer:No sentence-transformers model found with name bert-base-uncased. Creating a new one with mean pooling.
+INFO:root:[[39.625256 44.269764 45.63344  45.633755 45.90648  45.90648  48.91063
+  49.174232 49.174232 49.174232 49.42895  50.95643  51.289658 51.54348
+  51.748055 51.749607 51.95279  52.569916 52.769657 52.779327 53.049282
+  53.388725 53.94837  54.862465 54.976665 55.440063 55.63256  56.243965
+  56.329628 56.459312 56.500576 57.184235 57.189003 57.435295 57.45909
+  57.859978 58.02877  58.054394 58.054394 58.105    58.163235 58.359383
+  58.812584 58.91958  59.214775 59.249943 59.327744 59.826813 60.094162
+  60.21959 ]]
+INFO:sentence_transformers.SentenceTransformer:Load pretrained SentenceTransformer: bert-base-uncased
+WARNING:sentence_transformers.SentenceTransformer:No sentence-transformers model found with name bert-base-uncased. Creating a new one with mean pooling.
+INFO:root:[[39.625256 44.269764 45.63344  45.633755 45.90648  45.90648  48.91063
+  49.174232 49.174232 49.174232]]
+INFO:sentence_transformers.SentenceTransformer:Load pretrained SentenceTransformer: bert-base-uncased
+WARNING:sentence_transformers.SentenceTransformer:No sentence-transformers model found with name bert-base-uncased. Creating a new one with mean pooling.
+INFO:root:[[44.191635 45.508163 46.270615 52.13328  52.16351  52.16351  52.2504
+  52.2504   52.2504   52.812355]]
+INFO:sentence_transformers.SentenceTransformer:Load pretrained SentenceTransformer: bert-base-uncased
+WARNING:sentence_transformers.SentenceTransformer:No sentence-transformers model found with name bert-base-uncased. Creating a new one with mean pooling.
+INFO:root:[[39.625256 44.269764 45.63344  45.633755 45.90648  45.90648  48.91063
+  49.174232 49.174232 49.174232]]
+INFO:sentence_transformers.SentenceTransformer:Load pretrained SentenceTransformer: bert-base-uncased
+WARNING:sentence_transformers.SentenceTransformer:No sentence-transformers model found with name bert-base-uncased. Creating a new one with mean pooling.
+INFO:root:[[39.625256 44.269764 45.63344  45.633755 45.90648  45.90648  48.91063
+  49.174232 49.174232 49.174232]]
+INFO:sentence_transformers.SentenceTransformer:Load pretrained SentenceTransformer: bert-base-uncased
+WARNING:sentence_transformers.SentenceTransformer:No sentence-transformers model found with name bert-base-uncased. Creating a new one with mean pooling.
+INFO:root:[[39.625256 44.269764 45.63344  45.633755 45.90648  45.90648  48.91063
+  49.174232 49.174232 49.174232]]
+ERROR:root:Erro ao gerar resposta: BertModel.forward() got an unexpected keyword argument 'return_tensors'
+INFO:sentence_transformers.SentenceTransformer:Load pretrained SentenceTransformer: bert-base-uncased
+WARNING:sentence_transformers.SentenceTransformer:No sentence-transformers model found with name bert-base-uncased. Creating a new one with mean pooling.
+INFO:root:[[39.625256 44.269764 45.63344  45.633755 45.90648  45.90648  48.91063
+  49.174232 49.174232 49.174232]]
+INFO:sentence_transformers.SentenceTransformer:Load pretrained SentenceTransformer: bert-base-uncased
+WARNING:sentence_transformers.SentenceTransformer:No sentence-transformers model found with name bert-base-uncased. Creating a new one with mean pooling.
+INFO:root:[[39.625256 44.269764 45.63344  45.633755 45.90648  45.90648  48.91063
+  49.174232 49.174232 49.174232]]
+ERROR:root:Erro ao gerar resposta: The current model class (BertModel) is not compatible with `.generate()`, as it doesn't have a language model head. Classes that support generation often end in one of these names: ['ForCausalLM', 'ForConditionalGeneration', 'ForSpeechSeq2Seq', 'ForVision2Seq'].
+INFO:sentence_transformers.SentenceTransformer:Load pretrained SentenceTransformer: bert-base-uncased
+WARNING:sentence_transformers.SentenceTransformer:No sentence-transformers model found with name bert-base-uncased. Creating a new one with mean pooling.
+INFO:root:[[39.625256 44.269764 45.63344  45.633755 45.90648  45.90648  48.91063
+  49.174232 49.174232 49.174232]]
+ERROR:root:Erro no chatbot: 'CausalLMOutputWithCrossAttentions' object has no attribute 'last_hidden_state'
+ERROR:root:Erro no chatbot: 'CausalLMOutputWithCrossAttentions' object has no attribute 'last_hidden_state'
+INFO:root:[[42.984516 47.011185 48.984795 51.928894 52.370792 52.370792 52.370792
+  52.370792 52.370792 52.370792]]
+ERROR:root:Erro ao gerar resposta: The current model class (BertModel) is not compatible with `.generate()`, as it doesn't have a language model head. Classes that support generation often end in one of these names: ['ForCausalLM', 'ForConditionalGeneration', 'ForSpeechSeq2Seq', 'ForVision2Seq'].
+INFO:root:[[50.411148 50.411148 53.467068 53.7096   53.7096   53.7096   55.303123
+  55.622917 56.84571  57.25762 ]]
+ERROR:root:Erro ao gerar resposta: The current model class (BertModel) is not compatible with `.generate()`, as it doesn't have a language model head. Classes that support generation often end in one of these names: ['ForCausalLM', 'ForConditionalGeneration', 'ForSpeechSeq2Seq', 'ForVision2Seq'].
+ERROR:root:Erro no chatbot: 'CausalLMOutputWithCrossAttentions' object has no attribute 'last_hidden_state'
+INFO:root:[[48.166523 50.411148 50.411148 51.092224 52.507828 53.467068 53.7096
+  53.7096   53.7096   54.43589 ]]
+INFO:root:[[39.625256 40.29992  44.16418  44.269764 45.63344  45.633755 45.64627
+  45.90648  45.90648  46.296257]]
+INFO:root:[[38.7443   39.669327 40.510666 41.60936  42.213707 42.416145 42.484123
+  42.484123 42.484123 42.484123]]
+INFO:root:[[39.625256 44.269764 45.63344  45.633755 45.90648  45.90648  48.91063
+  49.174232 49.174232 49.174232]]
+INFO:root:[[50.411148 50.411148 53.467068 53.7096   53.7096   53.7096   55.303123
+  55.622917 56.84571  57.25762 ]]
+INFO:root:[[50.411148 50.411148 53.467068 53.7096   53.7096   53.7096   55.303123
+  55.622917 56.84571  57.25762 ]]
+INFO:root:[[50.411148 50.411148 53.467068 53.7096   53.7096   53.7096   55.303123
+  55.622917 56.84571  57.25762 ]]

@@ -1,0 +1,12 @@
+aline.py
+chatbot_errors.log
+cuda-keyring_1.1-1_all.deb
+cuda-keyring_1.1-1_all.deb
+documents_ids.pkl
+documents_mapping.pkl
+embeddings_data.pkl
+embeddings_index.faiss
+output.txt
+pdf_processing.log
+Pipeline.txt
+vector_index.faiss
