@@ -104,11 +104,6 @@ def process_pdf(text):
         return []
 
 
-import faiss
-import numpy as np
-
-import faiss
-import numpy as np
 
 def process_multiple_pdfs_and_store_in_faiss(pdf_urls):
     print("Iniciando processamento dos PDFs e criação de embeddings...")

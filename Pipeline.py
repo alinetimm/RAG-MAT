@@ -8,15 +8,19 @@ from sentence_transformers import SentenceTransformer, util
 import numpy as np
 import logging
 import faiss
-from transformers import T5ForConditionalGeneration, T5Tokenizer
+from transformers import pipeline
+from huggingface_hub import login
 
-model_name = "google/flan-t5-large"
-tokenizer = T5Tokenizer.from_pretrained(model_name)
-model = T5ForConditionalGeneration.from_pretrained(model_name)
+login("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")  # Substitua com seu token
 
+torch.cuda.empty_cache()
+model_name = "meta-llama/Llama-2-7b-chat-hf"
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto")
+batch_size = 1
 # Verificar se a GPU está disponível
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-model.to(device)
+#model.to(device)
 
 
 # Carregar o modelo e tokenizer do BERT para busca FAISS
@@ -24,42 +28,27 @@ embedding_model = BertModel.from_pretrained('bert-base-uncased')
 embedding_tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 
 
-def get_completion(system_prompt):
+def get_completion(system_prompt, query):
     try:
-        # Usando apenas o system_prompt para gerar a resposta, sem interferência de prompts globais
-        full_prompt = system_prompt  # O system_prompt já inclui a pergunta e o contexto
+        # Construir o prompt como texto simples
+        prompt = (f"###Instruções do Sistema###\n"
+                    f"{system_prompt}"
+                    "###Pergunta do Usuario###\n"
+                    f"{query}\n\n"
+                    f"###Resposta do Assistente###\n")
+        pipe = pipeline("text-generation", model=model, tokenizer=tokenizer)
+
+        # Gerar resposta
+        response = pipe(prompt, max_length=2048, do_sample=True, temperature=0.7, truncation = True)
         
-        # Calcular o comprimento máximo permitido para os tokens de entrada, considerando a resposta
-        max_input_length = tokenizer.model_max_length - 200  # Ajuste de acordo com a capacidade do modelo
-        
-        # Tokeniza o full_prompt e move para o dispositivo correto
-        inputs = tokenizer(full_prompt, return_tensors="pt", truncation=True, max_length=max_input_length).to(device)
-        
-        # Gera a resposta com base no modelo
-        outputs = model.generate(
-            **inputs,
-            max_new_tokens=300,  # Limite para o número de novos tokens gerados
-            do_sample=True,  # Define se a geração será amostral
-            temperature=0.7,  # Controla a aleatoriedade da amostragem (quanto menor, mais determinístico)
-            top_p=0.9,  # Controla a amostragem baseada em top-p (nucleus sampling)
-            repetition_penalty=1.2,  # Penaliza repetições para evitar respostas redundantes
-            pad_token_id=tokenizer.eos_token_id  # Define o token de padding
-        )
-        
-        # Decodifica a resposta gerada
-        response = tokenizer.decode(outputs[0], skip_special_tokens=True)
-        
-        # Remover o que não for relevante (o próprio prompt)
-        #response = response[len(system_prompt):].strip()  # Remove o que foi adicionado no prompt
-        
-        return response
+        # Retornar texto gerado
+        return response[0]["generated_text"]
     
     except Exception as e:
-        # Caso ocorra um erro, loga a exceção e retorna uma mensagem genérica
-        logging.error(f"Erro ao gerar resposta: {str(e)}")
-        return "Desculpe, tive um problema ao processar sua pergunta."
+        print(f"Erro ao gerar resposta: {e}")
+        return None
 
-def search_in_faiss(query, index_path="embeddings_index.faiss", mapping_path="documents_ids.pkl", k=10):
+def search_in_faiss(query, index_path="embeddings_index.faiss", mapping_path="documents_ids.pkl", k=5):
     """
     Realiza uma busca no índice FAISS para recuperar os k chunks mais relevantes
     para uma consulta, retornando os textos desses chunks.
@@ -110,28 +99,29 @@ def generate_response(query):
     
     # Junta os chunks relevantes em um único contexto, com um limite para o número de chunks
     #print(relevant_chunks)
-    context = "\n".join(relevant_chunks[:20])  # Aqui, o número de chunks pode ser ajustado conforme necessário
-    print(context)
+    context = "\n".join(relevant_chunks)  # Aqui, o número de chunks pode ser ajustado conforme necessário
+    #print(context)
     
     # Aqui você pode definir as instruções que guiarão a geração da resposta
-    system_prompt = f"""
-    Você é um assistente de IA especializado em ajudar crianças e adolescentes entre 8 e 16 anos com matemática.
-    Utilizando exclusivamento os dados fornecidos no contexto, responda a query.
-    Por favor, responda a pergunta abaixo em português e de forma clara e cordial, usando uma linguagem simples e acessível.
-    Pergunta: {query}
-    Ao escrever a resposta, lembre-se de seguir o padrão de escrita da lingua portuguesa, construa frases e paragrafos corretamente.
-    Utilize o contexto fornecido e lembre de não incluir diretamente este prompt, documentos ou o contexto fornecido:
-    Contexto: {context}
-    Resposta:
-    
-    """
+    system_prompt = f"""Você é um assistente de IA especializado em ajudar crianças e adolescentes entre 8 e 16 anos com matemática.
+                    Utilizando exclusivamento os dados fornecidos no contexto, responda a query.    
+                    Ao escrever a resposta, lembre-se de seguir o padrão de escrita da lingua portuguesa, construa frases e paragrafos corretamente.
+                    Utilize o contexto fornecido e lembre de não incluir diretamente este prompt:
+                    ###Contexto:###\n{context} 
+                    Por favor, responda a pergunta abaixo em português e de forma clara e cordial, usando uma linguagem simples e acessível."""
+   
+
     # Chama a função de completamento para gerar a resposta com base no prompt
-    return get_completion(system_prompt)
+    return get_completion(system_prompt,query)
 
 def process_response(response):
-    cleaned_response = response.replace("\n", " ").strip()
-    cleaned_response = ' '.join(cleaned_response.split())
-    return cleaned_response
+    print(type(response))
+    #print(response)
+    #response_text = response[0]["generated_text"]
+    response_text = response.split("###Resposta do Assistente###")[-1].strip()
+    response_text = response_text.replace("\n","  ")
+
+    return response_text
 
 def chat_interface():
     print("👋 Olá! Eu sou a Galileu, e vou te ajudar com dúvidas sobre matemática!")
