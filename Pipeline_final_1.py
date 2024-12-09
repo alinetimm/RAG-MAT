@@ -9,11 +9,8 @@ import faiss
 import google.generativeai as genai
 
 # ==================== CONFIGURAÇÕES ====================
-# Adicione sua chave de acesso da API da Gemini aqui
-API_KEY = "AIzaSyCf1dv0eXD7dnesfY0dvUUl3kIl4po5aYQ"  # Substitua pela sua chave de API real
+API_KEY = "AIzaSyCf1dv0eXD7dnesfY0dvUUl3kIl4po5aYQ"  #Eu sei que não bom deixar a chave no código, mas na falta de tempo acabou ficando aqui mesmo...
 genai.configure(api_key=API_KEY)
-
-# Carregar o modelo e tokenizer do BERT para busca FAISS
 embedding_model = BertModel.from_pretrained('bert-base-uncased')
 embedding_tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 
@@ -66,11 +63,11 @@ def search_in_faiss(query, index_path="embeddings_index.faiss", mapping_path="do
         # Carregar o índice FAISS
         index = faiss.read_index(index_path)
         
-        # Carregar o mapeamento de documentos
+       
         with open(mapping_path, "rb") as f:
             mapping = pickle.load(f)
         
-        # Criar embedding da query
+
         inputs = embedding_tokenizer(query, return_tensors='pt', truncation=True, padding=True, max_length=512)
         with torch.no_grad():
             outputs = embedding_model(**inputs)
