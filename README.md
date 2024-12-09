@@ -6,10 +6,10 @@ Este projeto implementa um sistema **RAG (Retrieval-Augmented Generation)** para
 
 ## Funcionalidades
 
-- **Processamento de PDFs**: O sistema extrai texto de livros em PDF e os divide em chunks processáveis.
+- **Processamento de PDFs**: O sistema extrai texto de livros em PDF e os divide em chunks processáveis, cada chunk tem exetamente 300 palavras.
 - **Banco de Dados de Chunks**: Os chunks são armazenados e indexados utilizando **FAISS** para busca eficiente.
 - **Respostas Otimizadas**: Perguntas do usuário são respondidas usando a LLM Gemini, com suporte a avaliação da qualidade das respostas.
-- **Foco em Matemática**: Respostas personalizadas para tópicos específicos da matemática.
+- **Foco em Matemática**: Respostas personalizadas para tópicos específicos da matemática, por conta de dificuldades no processamento dos pdfs, alguns temas parecem não ser encontrados as vezes.
 
 ---
 
