@@ -1,6 +1,6 @@
 # RAG para Respostas Matemáticas Usando a LLM Gemini
 
-Este projeto implementa um sistema **RAG (Retrieval-Augmented Generation)** para responder a perguntas relacionadas à matemática, abordando tópicos como **funções**, **polinômios**, **operações básicas** e **conjuntos**. O sistema utiliza a LLM **Gemini** para gerar respostas com base em um banco de dados criado a partir de livros em PDF.
+Este projeto implementa um sistema **RAG (Retrieval-Augmented Generation)** para responder a perguntas relacionadas à matemática, abordando tópicos como **funções**, **polinômios**, **operações básicas** e **conjuntos**. O sistema utiliza a LLM **Gemini** para gerar respostas com base em um banco de dados criado a partir de livros em PDF. Além disso, após dar a resposta para a pergunta, um sistema de avaliação pontua com uma nota de 0 à 10 a resposta que foi dada, explicando o motivo pelo qual tal nota está sendo recebida.
 
 ---
 
