@@ -84,7 +84,7 @@ def extract_text_and_images_from_pdf_url(url, output_filename="output.txt"):
 
 
 def process_pdf(text):
-    """Processa o texto de um PDF, retornando o conteúdo dividido em chunks."""
+    """Processa o texto de um PDF, retornando o conteúdo dividido em chunks de 300 palavras."""
     logging.info("Iniciando processamento do texto.")
     chunks = []
 
@@ -96,20 +96,37 @@ def process_pdf(text):
 
         # Divide o texto em sentenças
         paragraphs = text.split('.')  # Divisão inicial por sentenças
-        logging.info(f"Número inicial de sentenças extra��das: {len(paragraphs)}")
+        logging.info(f"Número inicial de sentenças extraídas: {len(paragraphs)}")
+
+        current_chunk = []
+        current_word_count = 0
 
         # Processa cada sentença, removendo espaços e adicionando como chunks
         for paragraph in paragraphs:
-            if paragraph.strip():
-                chunks.append(paragraph.strip())
+            words = paragraph.strip().split()
+            word_count = len(words)
+
+            # Verifica se adicionar a sentença excede o limite de 300 palavras
+            if current_word_count + word_count > 300:
+                # Adiciona o chunk atual à lista de chunks
+                chunks.append(' '.join(current_chunk))
+                # Reinicia o chunk atual
+                current_chunk = words
+                current_word_count = word_count
+            else:
+                current_chunk.extend(words)
+                current_word_count += word_count
         
+        # Adiciona o último chunk se não estiver vazio
+        if current_chunk:
+            chunks.append(' '.join(current_chunk))
+
         # Imprime os chunks extraídos
         print("Chunks extraídos:", chunks)  # Adicionado para imprimir os chunks
         
         # Verificação e log do número de chunks
         logging.info(f"Total de chunks criados: {len(chunks)}")
         
-        # Também podemos retornar a quantidade de chunks se necessário
         return chunks
 
     except Exception as e:
@@ -188,7 +205,7 @@ def process_multiple_pdfs_and_store_in_faiss(pdf_urls):
     print("Processamento e armazenamento no FAISS concluídos!")
 
 
-# Lista de URLs dos PDFs que você deseja processar
+
 pdf_urls = [
     "https://drive.google.com/file/d/13UhN1HXF5HUby5RSC4eYZaWHik0olsZc/view?usp=drive_link",
     "https://drive.google.com/file/d/1nG_7_IrlIH-tdQKy5Lmg47ced-ntPwu9/view?usp=sharing",
@@ -202,5 +219,4 @@ if __name__ == "__main__":
 
 import faiss
 print(faiss.__version__)
-
 
